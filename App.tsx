@@ -1,18 +1,25 @@
-import React, { useState, useCallback } from 'react';
+import React, { useState, useCallback, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
 import { AboutPage } from './pages/AboutPage';
 import { HelpPage } from './pages/HelpPage';
 import { LoginPage } from './pages/LoginPage';
+import { HistoryPage } from './pages/HistoryPage';
 import { Footer } from './components/Footer';
-import type { AnalysisResult } from './types';
+import type { AnalysisResult, HistoryItem } from './types';
+import { getHistory, saveHistory, clearHistory as clearHistoryStorage } from './utils/historyStorage';
 
-export type Page = 'home' | 'about' | 'help';
+export type Page = 'home' | 'about' | 'help' | 'history';
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(false);
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [analysisContext, setAnalysisContext] = useState<AnalysisResult | null>(null);
+  const [history, setHistory] = useState<HistoryItem[]>([]);
+
+  useEffect(() => {
+    setHistory(getHistory());
+  }, []);
 
   const handleLogin = () => {
     setIsLoggedIn(true);
@@ -24,13 +31,32 @@ const App: React.FC = () => {
     setAnalysisContext(null); 
   };
   
-  const handleAnalysisComplete = useCallback((result: AnalysisResult) => {
+  const handleAnalysisComplete = useCallback((result: AnalysisResult, imageSrc: string) => {
     setAnalysisContext(result);
+    
+    const newHistoryItem: HistoryItem = {
+      id: Date.now().toString(),
+      timestamp: new Date().toISOString(),
+      result,
+      imageSrc,
+    };
+
+    setHistory(prevHistory => {
+        const updatedHistory = [newHistoryItem, ...prevHistory];
+        saveHistory(updatedHistory);
+        return updatedHistory;
+    });
+
   }, []);
   
   const handleStartOver = useCallback(() => {
     setAnalysisContext(null);
   }, []);
+
+  const handleClearHistory = () => {
+    clearHistoryStorage();
+    setHistory([]);
+  };
 
   if (!isLoggedIn) {
     return <LoginPage onLogin={handleLogin} />;
@@ -42,6 +68,8 @@ const App: React.FC = () => {
         return <AboutPage />;
       case 'help':
         return <HelpPage />;
+      case 'history':
+        return <HistoryPage history={history} onClearHistory={handleClearHistory} />;
       case 'home':
       default:
         return <HomePage onAnalysisComplete={handleAnalysisComplete} onStartOver={handleStartOver} analysisContext={analysisContext} />;

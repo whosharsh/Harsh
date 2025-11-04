@@ -10,7 +10,7 @@ import { AlertTriangleIcon } from '../components/icons/AlertTriangleIcon';
 type AppState = 'welcome' | 'loading' | 'result' | 'error';
 
 interface HomePageProps {
-  onAnalysisComplete: (result: AnalysisResult) => void;
+  onAnalysisComplete: (result: AnalysisResult, imageSrc: string) => void;
   onStartOver: () => void;
   analysisContext: AnalysisResult | null;
 }
@@ -27,7 +27,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onAnalysisComplete, onStartO
 
     try {
       const result = await analyzePlantLeaf(imageDataUrl);
-      onAnalysisComplete(result);
+      onAnalysisComplete(result, imageDataUrl);
       setAppState('result');
     } catch (err) {
       console.error(err);

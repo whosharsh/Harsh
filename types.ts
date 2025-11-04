@@ -11,3 +11,10 @@ export interface ChatMessage {
   role: 'user' | 'model';
   content: string;
 }
+
+export interface HistoryItem {
+    id: string;
+    timestamp: string;
+    result: AnalysisResult;
+    imageSrc: string;
+}

@@ -13,6 +13,26 @@
       body {
         font-family: 'Poppins', sans-serif;
       }
+      @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+      }
+      .animate-fade-in {
+        animation: fadeIn 0.5s ease-out forwards;
+      }
+      @keyframes pulse-drag {
+        0%, 100% { transform: scale(1.02); }
+        50% { transform: scale(1.05); }
+      }
+      .animate-pulse-drag {
+        animation: pulse-drag 2s infinite cubic-bezier(0.4, 0, 0.6, 1);
+      }
     </style>
 <script type="importmap">
 {

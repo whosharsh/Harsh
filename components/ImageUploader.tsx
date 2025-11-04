@@ -32,11 +32,13 @@ export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) =
   });
 
   return (
-    <div className="bg-white/60 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-emerald-200 text-center transition-all duration-500 animate-fade-in">
+    <div className="bg-white/60 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-emerald-200 text-center transition-all duration-300 animate-fade-in hover:shadow-lg hover:-translate-y-1">
       <div
         {...getRootProps()}
-        className={`p-10 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
-          isDragActive ? 'border-emerald-600 bg-emerald-50' : 'border-emerald-300 hover:border-emerald-500'
+        className={`p-10 border-2 border-dashed rounded-lg cursor-pointer transition-all duration-300 ease-in-out ${
+          isDragActive 
+            ? 'border-emerald-600 bg-emerald-50 scale-[1.02] shadow-lg animate-pulse-drag' 
+            : 'border-emerald-300 hover:border-emerald-500 hover:scale-[1.02] hover:shadow-lg'
         }`}
       >
         <input {...getInputProps()} />
