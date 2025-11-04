@@ -60,45 +60,45 @@ export const Chatbox: React.FC<ChatboxProps> = ({ context }) => {
   };
 
   return (
-    <div className="bg-white/60 backdrop-blur-sm rounded-xl shadow-sm border border-emerald-200 overflow-hidden flex flex-col transition-all duration-500 animate-fade-in">
-      <div className="p-4 border-b border-emerald-200">
-        <h3 className="text-lg font-bold text-emerald-900 text-center">AI Plant Assistant</h3>
+    <div className="bg-[#FDFDFD] rounded-xl shadow-2xl shadow-[#9ebf4f]/20 border border-[#dce8b9]/50 overflow-hidden flex flex-col transition-all duration-500 animate-fade-in">
+      <div className="p-4 border-b border-[#dce8b9]/50">
+        <h3 className="text-lg font-bold text-[#36451b] text-center">AI Plant Assistant</h3>
       </div>
       <div className="p-4 flex-grow h-80 overflow-y-auto space-y-4">
         {messages.map((msg, index) => (
-          <div key={index} className={`flex items-start gap-3 ${msg.role === 'user' ? 'justify-end' : ''}`}>
+          <div key={index} className={`flex items-start gap-3 animate-fade-in ${msg.role === 'user' ? 'justify-end' : ''}`}>
             {msg.role === 'model' && (
-              <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#80a040] text-white flex items-center justify-center flex-shrink-0">
                 <BotIcon className="w-5 h-5" />
               </div>
             )}
-            <div className={`max-w-xs md:max-w-md p-3 rounded-lg ${msg.role === 'user' ? 'bg-emerald-600 text-white' : 'bg-lime-100 text-emerald-900'}`}>
+            <div className={`max-w-xs md:max-w-md p-3 rounded-lg ${msg.role === 'user' ? 'bg-gradient-to-br from-[#9ebf4f] to-[#80a040] text-white' : 'bg-[#f7f9ed] text-[#4d6426]'}`}>
               <p className="text-sm">{msg.content}</p>
             </div>
              {msg.role === 'user' && (
-              <div className="w-8 h-8 rounded-full bg-gray-300 text-gray-700 flex items-center justify-center flex-shrink-0">
+              <div className="w-8 h-8 rounded-full bg-[#80a040] text-white flex items-center justify-center flex-shrink-0">
                 <UserIcon className="w-5 h-5" />
               </div>
             )}
           </div>
         ))}
          {isLoading && (
-            <div className="flex items-start gap-3">
-                <div className="w-8 h-8 rounded-full bg-emerald-600 text-white flex items-center justify-center flex-shrink-0">
+            <div className="flex items-start gap-3 animate-fade-in">
+                <div className="w-8 h-8 rounded-full bg-[#80a040] text-white flex items-center justify-center flex-shrink-0">
                     <BotIcon className="w-5 h-5 animate-pulse" />
                 </div>
-                <div className="max-w-xs md:max-w-md p-3 rounded-lg bg-lime-100 text-emerald-900">
+                <div className="max-w-xs md:max-w-md p-3 rounded-lg bg-[#f7f9ed] text-[#4d6426]">
                     <div className="flex items-center space-x-2">
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce"></div>
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce delay-75"></div>
-                        <div className="w-2 h-2 bg-emerald-400 rounded-full animate-bounce delay-150"></div>
+                        <div className="w-2 h-2 bg-[#80a040] rounded-full animate-bounce"></div>
+                        <div className="w-2 h-2 bg-[#80a040] rounded-full animate-bounce delay-75"></div>
+                        <div className="w-2 h-2 bg-[#80a040] rounded-full animate-bounce delay-150"></div>
                     </div>
                 </div>
             </div>
          )}
         <div ref={messagesEndRef} />
       </div>
-      <div className="p-4 border-t border-emerald-200 bg-white/50">
+      <div className="p-4 border-t border-[#dce8b9]/50 bg-[#FDFDFD]">
         <div className="flex items-center space-x-2">
           <input
             type="text"
@@ -106,10 +106,10 @@ export const Chatbox: React.FC<ChatboxProps> = ({ context }) => {
             onChange={(e) => setInput(e.target.value)}
             onKeyPress={(e) => e.key === 'Enter' && handleSend()}
             placeholder="Ask a follow-up question..."
-            className="flex-grow p-2 border border-emerald-300 rounded-md focus:outline-none focus:ring-2 focus:ring-emerald-500"
+            className="flex-grow p-2 border border-gray-300 rounded-md focus:outline-none focus:ring-2 focus:ring-[#9ebf4f]"
             disabled={isLoading}
           />
-          <button onClick={handleSend} disabled={isLoading} className="bg-emerald-600 text-white p-2 rounded-md hover:bg-emerald-700 disabled:bg-emerald-300 disabled:cursor-not-allowed transition-colors">
+          <button onClick={handleSend} disabled={isLoading} className="bg-gradient-to-r from-[#9ebf4f] to-[#80a040] text-white p-2 rounded-md hover:from-[#80a040] hover:to-[#648232] disabled:from-[#eef3d9] disabled:to-[#dce8b9] disabled:cursor-not-allowed transition-all">
             <SendIcon className="w-6 h-6" />
           </button>
         </div>

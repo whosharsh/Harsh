@@ -25,11 +25,13 @@ export const analyzePlantLeaf = async (imageDataUrl: string): Promise<AnalysisRe
     };
     
     const textPart = {
-      text: `You are an expert botanist and plant pathologist with a strong emphasis on safety. Analyze this image of a plant leaf with extreme care.
+      text: `You are an expert botanist and plant pathologist with a strong emphasis on safety. You have access to Google Search to find the most up-to-date information.
+Analyze this image of a plant leaf with extreme care.
 Your process must be:
 1. First, identify the plant species.
 2. Second, and most importantly, determine if this plant has any known toxicity or is hazardous to humans or pets (e.g., poisonous, skin irritant).
-3. Third, determine if the plant is healthy or has a disease.
+3. Third, determine if the plant is healthy or has a disease. Use Google Search to find current information about diseases and treatments if necessary.
+4. Fourth, if you use Google Search, cite your sources.
 
 Respond ONLY with a JSON object wrapped in a single markdown code block (\`\`\`json ... \`\`\`).
 The JSON object must strictly follow this structure:
@@ -51,6 +53,9 @@ CRITICAL SAFETY INSTRUCTIONS:
     const response = await ai.models.generateContent({
       model: 'gemini-2.5-flash',
       contents: { parts: [imagePart, textPart] },
+      config: {
+        tools: [{googleSearch: {}}],
+      },
     });
     
     const jsonText = response.text;
@@ -63,11 +68,14 @@ CRITICAL SAFETY INSTRUCTIONS:
     const extractedJson = match[1];
     const result = JSON.parse(extractedJson);
     
+    const sources = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
+
     const processedResult: AnalysisResult = {
         ...result,
         diseaseName: result.diseaseName === "" ? null : result.diseaseName,
         treatment: result.treatment === "" ? null : result.treatment,
         safetyWarning: result.safetyWarning === "" ? null : result.safetyWarning,
+        sources: sources?.filter(chunk => chunk.web),
     };
 
     if (typeof processedResult.isHealthy !== 'boolean' || typeof processedResult.plantName !== 'string') {

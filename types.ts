@@ -1,3 +1,11 @@
+
+export interface GroundingChunk {
+  web?: {
+    uri: string;
+    title: string;
+  };
+}
+
 export interface AnalysisResult {
   isHealthy: boolean;
   plantName: string;
@@ -5,6 +13,7 @@ export interface AnalysisResult {
   description: string;
   treatment: string | null;
   safetyWarning: string | null;
+  sources?: GroundingChunk[];
 }
 
 export interface ChatMessage {
@@ -17,4 +26,10 @@ export interface HistoryItem {
     timestamp: string;
     result: AnalysisResult;
     imageSrc: string;
+}
+
+export interface User {
+    name: string;
+    email: string;
+    mobile?: string;
 }

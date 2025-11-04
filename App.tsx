@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback, useEffect } from 'react';
 import { Header } from './components/Header';
 import { HomePage } from './pages/HomePage';
@@ -8,25 +9,30 @@ import { HistoryPage } from './pages/HistoryPage';
 import { Footer } from './components/Footer';
 import type { AnalysisResult, HistoryItem } from './types';
 import { getHistory, saveHistory, clearHistory as clearHistoryStorage } from './utils/historyStorage';
+import { getLoggedInUser, loginUser, logoutUser } from './utils/auth';
 
 export type Page = 'home' | 'about' | 'help' | 'history';
 
 const App: React.FC = () => {
-  const [isLoggedIn, setIsLoggedIn] = useState(false);
+  const [isLoggedIn, setIsLoggedIn] = useState(!!getLoggedInUser());
   const [currentPage, setCurrentPage] = useState<Page>('home');
   const [analysisContext, setAnalysisContext] = useState<AnalysisResult | null>(null);
   const [history, setHistory] = useState<HistoryItem[]>([]);
 
   useEffect(() => {
-    setHistory(getHistory());
-  }, []);
+    if (isLoggedIn) {
+        setHistory(getHistory());
+    }
+  }, [isLoggedIn]);
 
   const handleLogin = () => {
+    loginUser();
     setIsLoggedIn(true);
     setCurrentPage('home');
   };
 
   const handleLogout = () => {
+    logoutUser();
     setIsLoggedIn(false);
     setAnalysisContext(null); 
   };
@@ -77,7 +83,7 @@ const App: React.FC = () => {
   };
 
   return (
-    <div className="min-h-screen bg-lime-50 flex flex-col">
+    <div className="min-h-screen flex flex-col">
       <Header currentPage={currentPage} onNavigate={setCurrentPage} onLogout={handleLogout} />
       <main className="flex-grow">
         {renderPage()}

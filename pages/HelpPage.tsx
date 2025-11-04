@@ -27,11 +27,11 @@ const faqs = [
 export const HelpPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
-      <div className="max-w-4xl mx-auto bg-white/60 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-emerald-200">
+      <div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-2xl shadow-[#9ebf4f]/10 border border-[#dce8b9]/50">
         <div className="text-center mb-8">
-          <InfoIcon className="mx-auto h-12 w-auto text-emerald-600" />
-          <h1 className="mt-4 text-4xl font-bold text-emerald-900">Help Center</h1>
-          <p className="mt-4 text-lg text-emerald-700">
+          <InfoIcon className="mx-auto h-12 w-auto text-[#80a040]" />
+          <h1 className="mt-4 text-4xl font-bold text-[#36451b]">Help Center</h1>
+          <p className="mt-4 text-lg text-[#648232]">
             Frequently Asked Questions
           </p>
         </div>
@@ -39,8 +39,8 @@ export const HelpPage: React.FC = () => {
         <div className="space-y-8">
             {faqs.map((faq, index) => (
                  <div key={index}>
-                    <h2 className="text-xl font-semibold text-emerald-900">{faq.q}</h2>
-                    <p className="mt-2 text-emerald-800">{faq.a}</p>
+                    <h2 className="text-xl font-semibold text-[#36451b]">{faq.q}</h2>
+                    <p className="mt-2 text-[#4d6426]">{faq.a}</p>
                  </div>
             ))}
         </div>
