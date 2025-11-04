@@ -1,9 +1,7 @@
-
 import React from 'react';
 import { LeafIcon } from '../components/icons/LeafIcon';
 import { GoogleIcon } from '../components/icons/GoogleIcon';
 import { FacebookIcon } from '../components/icons/FacebookIcon';
-import { AppleIcon } from '../components/icons/AppleIcon';
 
 interface LoginPageProps {
   onLogin: () => void;
@@ -11,17 +9,17 @@ interface LoginPageProps {
 
 export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
     
-  const socialIconClasses = "p-3 rounded-full border border-white/20 bg-white/10 hover:bg-white/20 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#36451b] dark:focus:ring-offset-gray-900 focus:ring-white";
+  const socialIconClasses = "p-3 rounded-full border border-gray-300 bg-gray-100 hover:bg-gray-200 transition-colors focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-white focus:ring-[#80a040]";
 
   return (
-    <div className="min-h-screen flex items-center justify-center bg-[#36451b] dark:bg-gray-900 px-4 py-12 transition-colors">
+    <div className="min-h-screen flex items-center justify-center px-4 py-12">
       <div className="max-w-md w-full space-y-8">
         <div className="text-center">
-          <LeafIcon className="mx-auto h-16 w-auto text-[#9ebf4f]" />
-          <h2 className="mt-6 text-center text-3xl font-extrabold text-white">
+          <LeafIcon className="mx-auto h-16 w-auto text-[#80a040]" />
+          <h2 className="mt-6 text-center text-3xl font-extrabold text-[#36451b]">
             Create your account
           </h2>
-          <p className="mt-2 text-center text-md text-[#dce8b9]">
+          <p className="mt-2 text-center text-md text-[#648232]">
             Your personal assistant for a greener world.
           </p>
         </div>
@@ -35,7 +33,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="email"
                 autoComplete="email"
                 required
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-white/20 bg-white/10 placeholder-gray-400 text-white focus:outline-none focus:ring-1 focus:ring-[#9ebf4f] focus:border-[#9ebf4f] sm:text-sm"
+                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#80a040] focus:border-[#80a040] sm:text-sm"
                 placeholder="Email address"
               />
             </div>
@@ -45,7 +43,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 name="mobile"
                 type="tel"
                 autoComplete="tel"
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-white/20 bg-white/10 placeholder-gray-400 text-white focus:outline-none focus:ring-1 focus:ring-[#9ebf4f] focus:border-[#9ebf4f] sm:text-sm"
+                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#80a040] focus:border-[#80a040] sm:text-sm"
                 placeholder="Mobile number (optional)"
               />
             </div>
@@ -56,7 +54,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
                 type="password"
                 autoComplete="current-password"
                 required
-                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-white/20 bg-white/10 placeholder-gray-400 text-white focus:outline-none focus:ring-1 focus:ring-[#9ebf4f] focus:border-[#9ebf4f] sm:text-sm"
+                className="appearance-none rounded-md relative block w-full px-3 py-2 border border-gray-300 bg-white placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-1 focus:ring-[#80a040] focus:border-[#80a040] sm:text-sm"
                 placeholder="Password"
               />
             </div>
@@ -74,10 +72,10 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
 
         <div className="relative">
             <div className="absolute inset-0 flex items-center">
-                <div className="w-full border-t border-white/20" />
+                <div className="w-full border-t border-gray-300" />
             </div>
             <div className="relative flex justify-center text-sm">
-                <span className="px-2 bg-[#36451b] dark:bg-gray-900 text-gray-400 transition-colors">
+                <span className="px-2 bg-[#FDFDFD] text-gray-500">
                   Or continue with
                 </span>
             </div>
@@ -98,15 +96,7 @@ export const LoginPage: React.FC<LoginPageProps> = ({ onLogin }) => {
               className={socialIconClasses}
               aria-label="Continue with Facebook"
             >
-              <FacebookIcon className="h-6 w-6 text-white" />
-            </button>
-             <button
-              type="button"
-              onClick={onLogin}
-              className={socialIconClasses}
-              aria-label="Continue with Apple"
-            >
-              <AppleIcon className="h-6 w-6 text-white" />
+              <FacebookIcon className="h-6 w-6 text-[#1877F2]" />
             </button>
         </div>
         

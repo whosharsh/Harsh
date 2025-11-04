@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="en">
 <head>
@@ -10,23 +11,12 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
-      :root {
-        color-scheme: light;
-      }
-      html.dark {
-        color-scheme: dark;
-      }
       body {
         font-family: 'Poppins', sans-serif;
         background-color: #FDFDFD; /* Pearl White */
         /* Subtle pattern for texture */
         background-image: radial-gradient(#f7f9ed 1px, transparent 1px); /* Light Olive */
         background-size: 16px 16px;
-        transition: background-color 0.3s ease, color 0.3s ease;
-      }
-      html.dark body {
-        background-color: #111827; /* Gray 900 */
-        background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
       }
       @keyframes fadeIn {
         from {
@@ -56,12 +46,14 @@
     "react": "https://aistudiocdn.com/react@^19.2.0",
     "react-dom/": "https://aistudiocdn.com/react-dom@^19.2.0/",
     "@google/genai": "https://aistudiocdn.com/@google/genai@^1.28.0",
-    "react-dropzone": "https://aistudiocdn.com/react-dropzone@^14.3.8"
+    "react-dropzone": "https://aistudiocdn.com/react-dropzone@^14.3.8",
+    "jspdf": "https://aistudiocdn.com/jspdf@^2.5.1",
+    "html2canvas": "https://aistudiocdn.com/html2canvas@^1.4.1"
   }
 }
 </script>
 </head>
-<body class="text-[#36451b] dark:text-[#dce8b9]">
+<body class="text-[#36451b]">
 <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 </body>

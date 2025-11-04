@@ -10,7 +10,7 @@ if (!API_KEY) {
 const ai = new GoogleGenAI({ apiKey: API_KEY });
 
 const parseDataUrl = (dataUrl: string) => {
-    const match = dataUrl.match(/^data:(.+);base64,(.+)$/);
+    const match = dataUrl.match(/^data:(.*);base64,(.+)$/);
     if (!match) {
         throw new Error("Invalid data URL format");
     }
@@ -31,7 +31,8 @@ Your process must be:
 1. First, identify the plant species.
 2. Second, and most importantly, determine if this plant has any known toxicity or is hazardous to humans or pets (e.g., poisonous, skin irritant).
 3. Third, determine if the plant is healthy or has a disease. Use Google Search to find current information about diseases and treatments if necessary.
-4. Fourth, if you use Google Search, cite your sources.
+4. Fourth, provide a confidence score (from 0.0 to 1.0) for your diagnosis.
+5. Fifth, if you use Google Search, cite your sources.
 
 Respond ONLY with a JSON object wrapped in a single markdown code block (\`\`\`json ... \`\`\`).
 The JSON object must strictly follow this structure:
@@ -41,7 +42,8 @@ The JSON object must strictly follow this structure:
   "diseaseName": "string",
   "description": "string",
   "treatment": "string",
-  "safetyWarning": "string"
+  "safetyWarning": "string",
+  "confidenceScore": number
 }
 CRITICAL SAFETY INSTRUCTIONS:
 - If the plant is known to be toxic or hazardous, provide a clear, concise warning in the "safetyWarning" field (e.g., "Warning: This plant is toxic if ingested by pets.").
@@ -55,18 +57,23 @@ CRITICAL SAFETY INSTRUCTIONS:
       contents: { parts: [imagePart, textPart] },
       config: {
         tools: [{googleSearch: {}}],
+        // responseMimeType must not be set when using googleSearch. Removed.
       },
     });
     
     const jsonText = response.text;
     
-    const match = jsonText.match(/```json\s*([\s\S]*?)\s*```/);
-    if (!match || !match[1]) {
-        throw new Error("AI response did not contain a valid JSON markdown block.");
+    // The response might be wrapped in a markdown code block, so we need to extract it.
+    const jsonMatch = jsonText.match(/```json\n([\s\S]*?)\n```/);
+    const parsableText = jsonMatch ? jsonMatch[1] : jsonText;
+
+    let result;
+    try {
+      result = JSON.parse(parsableText);
+    } catch (e) {
+      console.error("Failed to parse JSON from AI response:", parsableText);
+      throw new Error("AI response was not in a valid JSON format.");
     }
-    
-    const extractedJson = match[1];
-    const result = JSON.parse(extractedJson);
     
     const sources = response.candidates?.[0]?.groundingMetadata?.groundingChunks;
 
@@ -86,6 +93,9 @@ CRITICAL SAFETY INSTRUCTIONS:
 
   } catch (error) {
     console.error("Error analyzing plant leaf:", error);
+    if (error instanceof SyntaxError || error.message.includes("JSON")) {
+        throw new Error("Failed to parse the AI's response. It may not be valid JSON.");
+    }
     throw new Error("Failed to analyze leaf image with the AI service.");
   }
 };

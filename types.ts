@@ -13,6 +13,7 @@ export interface AnalysisResult {
   description: string;
   treatment: string | null;
   safetyWarning: string | null;
+  confidenceScore?: number;
   sources?: GroundingChunk[];
 }
 
@@ -32,4 +33,12 @@ export interface User {
     name: string;
     email: string;
     mobile?: string;
+}
+
+export interface EducationalContent {
+    name: string;
+    scientificName: string;
+    description: string;
+    prevention: string;
+    image: string;
 }
