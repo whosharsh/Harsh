@@ -1,0 +1,5 @@
+{
+  "name": "Copy of Plant Disease Detection System",
+  "description": "An AI-powered application that analyzes images of plant leaves to detect diseases, identify the specific condition, and provide treatment suggestions using multimodal analysis.",
+  "requestFramePermissions": []
+}
