@@ -1,3 +1,4 @@
+
 import React, { useState, useCallback } from 'react';
 import { ImageUploader } from '../components/ImageUploader';
 import { ResultCard } from '../components/ResultCard';
@@ -65,15 +66,15 @@ export const HomePage: React.FC<HomePageProps> = ({ onAnalysisComplete, onStartO
         );
       case 'error':
         return (
-          <div className="text-center bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-lg border border-rose-200">
+          <div className="text-center bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-8 rounded-xl shadow-lg border border-rose-200 dark:border-rose-500/30">
             <div className="flex justify-center items-center mb-4">
                <AlertTriangleIcon className="h-10 w-10 text-rose-500" />
             </div>
-            <h2 className="text-xl font-bold text-rose-700">Analysis Failed</h2>
-            <p className="mt-2 text-[#648232]">{error}</p>
+            <h2 className="text-xl font-bold text-rose-700 dark:text-rose-400">Analysis Failed</h2>
+            <p className="mt-2 text-[#648232] dark:text-gray-300">{error}</p>
             <button
               onClick={handleStartOverClick}
-              className="mt-6 px-8 py-3 bg-gradient-to-r from-[#80a040] to-[#648232] text-white font-semibold rounded-lg shadow-sm hover:from-[#648232] hover:to-[#4d6426] transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9ebf4f]"
+              className="mt-6 px-8 py-3 bg-gradient-to-r from-[#80a040] to-[#648232] text-white font-semibold rounded-lg shadow-sm hover:from-[#648232] hover:to-[#4d6426] transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9ebf4f] dark:from-[#9ebf4f] dark:to-[#80a040] dark:text-gray-900 dark:hover:from-lime-300 dark:hover:to-lime-400 dark:focus:ring-lime-300"
             >
               Try Again
             </button>
@@ -91,8 +92,8 @@ export const HomePage: React.FC<HomePageProps> = ({ onAnalysisComplete, onStartO
     <div className="container mx-auto px-4 py-8 md:py-12">
       {appState !== 'result' && (
         <div className="max-w-3xl mx-auto text-center">
-            <h1 className="text-3xl md:text-4xl font-bold text-[#36451b]">Plant Health Analysis</h1>
-            <p className="mt-4 text-lg text-[#648232]">
+            <h1 className="text-3xl md:text-4xl font-bold text-[#36451b] dark:text-white">Plant Health Analysis</h1>
+            <p className="mt-4 text-lg text-[#648232] dark:text-gray-300">
                 Upload a photo of a plant leaf, and our AI will identify potential diseases and provide care suggestions.
             </p>
         </div>
@@ -104,7 +105,7 @@ export const HomePage: React.FC<HomePageProps> = ({ onAnalysisComplete, onStartO
          <div className="mt-8 flex justify-center">
             <button
               onClick={handleStartOverClick}
-              className="px-8 py-3 bg-gradient-to-r from-[#80a040] to-[#648232] text-white font-semibold rounded-lg shadow-sm hover:from-[#648232] hover:to-[#4d6426] transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9ebf4f]"
+              className="px-8 py-3 bg-gradient-to-r from-[#80a040] to-[#648232] text-white font-semibold rounded-lg shadow-sm hover:from-[#648232] hover:to-[#4d6426] transition-all focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-[#9ebf4f] dark:from-[#9ebf4f] dark:to-[#80a040] dark:text-gray-900 dark:hover:from-lime-300 dark:hover:to-lime-400 dark:focus:ring-lime-300"
             >
               Analyze Another Leaf
             </button>

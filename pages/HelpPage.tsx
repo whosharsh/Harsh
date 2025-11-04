@@ -1,3 +1,4 @@
+
 import React from 'react';
 import { InfoIcon } from '../components/icons/InfoIcon';
 
@@ -27,11 +28,11 @@ const faqs = [
 export const HelpPage: React.FC = () => {
   return (
     <div className="container mx-auto px-4 py-8 md:py-12">
-      <div className="max-w-4xl mx-auto bg-white/80 backdrop-blur-md p-8 rounded-xl shadow-2xl shadow-[#9ebf4f]/10 border border-[#dce8b9]/50">
+      <div className="max-w-4xl mx-auto bg-white/80 dark:bg-gray-800/80 backdrop-blur-md p-8 rounded-xl shadow-2xl shadow-[#9ebf4f]/10 dark:shadow-[#9ebf4f]/5 border border-[#dce8b9]/50 dark:border-gray-700">
         <div className="text-center mb-8">
-          <InfoIcon className="mx-auto h-12 w-auto text-[#80a040]" />
-          <h1 className="mt-4 text-4xl font-bold text-[#36451b]">Help Center</h1>
-          <p className="mt-4 text-lg text-[#648232]">
+          <InfoIcon className="mx-auto h-12 w-auto text-[#80a040] dark:text-lime-400" />
+          <h1 className="mt-4 text-4xl font-bold text-[#36451b] dark:text-white">Help Center</h1>
+          <p className="mt-4 text-lg text-[#648232] dark:text-gray-300">
             Frequently Asked Questions
           </p>
         </div>
@@ -39,8 +40,8 @@ export const HelpPage: React.FC = () => {
         <div className="space-y-8">
             {faqs.map((faq, index) => (
                  <div key={index}>
-                    <h2 className="text-xl font-semibold text-[#36451b]">{faq.q}</h2>
-                    <p className="mt-2 text-[#4d6426]">{faq.a}</p>
+                    <h2 className="text-xl font-semibold text-[#36451b] dark:text-white">{faq.q}</h2>
+                    <p className="mt-2 text-[#4d6426] dark:text-gray-300">{faq.a}</p>
                  </div>
             ))}
         </div>

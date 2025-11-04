@@ -1,4 +1,3 @@
-
 import type { User } from '../types';
 
 const USER_KEY = 'plant-ai-user';
@@ -30,6 +29,23 @@ export const loginUser = (): User => {
         console.error("Failed to save user to localStorage", error);
     }
     return mockUser;
+};
+
+export const updateUser = (updatedData: Partial<User>): User | null => {
+    try {
+        const currentUser = getLoggedInUser();
+        if (!currentUser) {
+            return null;
+        }
+
+        const updatedUser = { ...currentUser, ...updatedData };
+        const userJson = JSON.stringify(updatedUser);
+        localStorage.setItem(USER_KEY, userJson);
+        return updatedUser;
+    } catch (error) {
+        console.error("Failed to update user in localStorage", error);
+        return null;
+    }
 };
 
 export const logoutUser = (): void => {

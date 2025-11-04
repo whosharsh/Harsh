@@ -6,12 +6,13 @@ import { AboutPage } from './pages/AboutPage';
 import { HelpPage } from './pages/HelpPage';
 import { LoginPage } from './pages/LoginPage';
 import { HistoryPage } from './pages/HistoryPage';
+import { SettingsPage } from './pages/SettingsPage';
 import { Footer } from './components/Footer';
 import type { AnalysisResult, HistoryItem } from './types';
 import { getHistory, saveHistory, clearHistory as clearHistoryStorage } from './utils/historyStorage';
 import { getLoggedInUser, loginUser, logoutUser } from './utils/auth';
 
-export type Page = 'home' | 'about' | 'help' | 'history';
+export type Page = 'home' | 'about' | 'help' | 'history' | 'settings';
 
 const App: React.FC = () => {
   const [isLoggedIn, setIsLoggedIn] = useState(!!getLoggedInUser());
@@ -76,6 +77,8 @@ const App: React.FC = () => {
         return <HelpPage />;
       case 'history':
         return <HistoryPage history={history} onClearHistory={handleClearHistory} />;
+      case 'settings':
+        return <SettingsPage onLogout={handleLogout} onClearHistory={handleClearHistory} onNavigate={setCurrentPage} />;
       case 'home':
       default:
         return <HomePage onAnalysisComplete={handleAnalysisComplete} onStartOver={handleStartOver} analysisContext={analysisContext} />;

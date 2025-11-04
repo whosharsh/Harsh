@@ -1,8 +1,13 @@
+
 import React, { useState } from 'react';
 import { LeafIcon } from './icons/LeafIcon';
 import { MenuIcon } from './icons/MenuIcon';
 import { CloseIcon } from './icons/CloseIcon';
 import { HistoryIcon } from './icons/HistoryIcon';
+import { SunIcon } from './icons/SunIcon';
+import { MoonIcon } from './icons/MoonIcon';
+import { SettingsIcon } from './icons/SettingsIcon';
+import { useTheme } from '../contexts/ThemeContext';
 import type { Page } from '../App';
 
 interface HeaderProps {
@@ -13,6 +18,7 @@ interface HeaderProps {
 
 export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, onLogout }) => {
   const [isMenuOpen, setIsMenuOpen] = useState(false);
+  const { theme, toggleTheme } = useTheme();
 
   const navLinkClasses = (page: Page, isMobile: boolean = false) => {
     const baseClasses = isMobile 
@@ -21,8 +27,8 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, onLogou
     
     return `${baseClasses} transition-colors ${
       currentPage === page 
-      ? 'bg-[#648232] text-white' 
-      : 'text-[#dce8b9] hover:bg-[#4d6426] hover:text-white'
+      ? 'bg-[#648232] dark:bg-[#9ebf4f] text-white dark:text-[#36451b]' 
+      : 'text-lime-200 dark:text-gray-300 hover:bg-[#4d6426] dark:hover:bg-gray-700 hover:text-white dark:hover:text-white'
     }`;
   };
 
@@ -32,7 +38,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, onLogou
   };
 
   return (
-    <header className="bg-[#36451b] shadow-md sticky top-0 z-20">
+    <header className="bg-[#36451b] dark:bg-gray-900 shadow-md sticky top-0 z-20 transition-colors">
       <div className="container mx-auto px-4">
         <div className="flex items-center justify-between h-16">
           <div className="flex items-center">
@@ -46,15 +52,25 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, onLogou
             <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} className={navLinkClasses('home')}>Home</a>
             <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('about'); }} className={navLinkClasses('about')}>About</a>
             <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('help'); }} className={navLinkClasses('help')}>Help</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('history'); }} className={navLinkClasses('history')}>
-                <HistoryIcon className="w-4 h-4 mr-2" />
-                History
-            </a>
           </nav>
           <div className="flex items-center">
+             <button
+                onClick={() => handleNavClick('settings')}
+                className="p-2 rounded-full text-lime-200 dark:text-gray-300 hover:bg-[#4d6426] dark:hover:bg-gray-700 hover:text-white dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#36451b] dark:focus:ring-offset-gray-900 focus:ring-white transition-colors"
+                aria-label="Open settings"
+            >
+                <SettingsIcon className="h-5 w-5" />
+            </button>
+             <button
+                onClick={toggleTheme}
+                className="ml-2 p-2 rounded-full text-lime-200 dark:text-gray-300 hover:bg-[#4d6426] dark:hover:bg-gray-700 hover:text-white dark:hover:text-white focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#36451b] dark:focus:ring-offset-gray-900 focus:ring-white transition-colors"
+                aria-label="Toggle theme"
+            >
+                {theme === 'light' ? <MoonIcon className="h-5 w-5" /> : <SunIcon className="h-5 w-5" />}
+            </button>
             <button
                 onClick={onLogout}
-                className="px-4 py-2 text-sm font-medium text-white bg-[#80a040] rounded-md hover:bg-[#648232] focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#36451b] focus:ring-white"
+                className="ml-4 px-4 py-2 text-sm font-medium text-white bg-[#80a040] dark:bg-[#9ebf4f] dark:text-[#36451b] rounded-md hover:bg-[#648232] dark:hover:bg-lime-300 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-offset-[#36451b] dark:focus:ring-offset-gray-900 focus:ring-white transition-colors"
             >
                 Logout
             </button>
@@ -62,7 +78,7 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, onLogou
             <div className="md:hidden ml-4">
               <button
                 onClick={() => setIsMenuOpen(!isMenuOpen)}
-                className="inline-flex items-center justify-center p-2 rounded-md text-[#dce8b9] hover:text-white hover:bg-[#4d6426] focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
+                className="inline-flex items-center justify-center p-2 rounded-md text-lime-200 dark:text-gray-300 hover:text-white hover:bg-[#4d6426] dark:hover:bg-gray-700 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-white"
                 aria-controls="mobile-menu"
                 aria-expanded={isMenuOpen}
               >
@@ -85,9 +101,9 @@ export const Header: React.FC<HeaderProps> = ({ currentPage, onNavigate, onLogou
             <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('home'); }} className={navLinkClasses('home', true)}>Home</a>
             <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('about'); }} className={navLinkClasses('about', true)}>About</a>
             <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('help'); }} className={navLinkClasses('help', true)}>Help</a>
-            <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('history'); }} className={navLinkClasses('history', true)}>
-                <HistoryIcon className="w-5 h-5 mr-3" />
-                History
+            <a href="#" onClick={(e) => { e.preventDefault(); handleNavClick('settings'); }} className={navLinkClasses('settings', true)}>
+                <SettingsIcon className="w-5 h-5 mr-3" />
+                Settings
             </a>
           </nav>
         </div>

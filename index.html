@@ -10,12 +10,23 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
     <style>
+      :root {
+        color-scheme: light;
+      }
+      html.dark {
+        color-scheme: dark;
+      }
       body {
         font-family: 'Poppins', sans-serif;
         background-color: #FDFDFD; /* Pearl White */
         /* Subtle pattern for texture */
         background-image: radial-gradient(#f7f9ed 1px, transparent 1px); /* Light Olive */
         background-size: 16px 16px;
+        transition: background-color 0.3s ease, color 0.3s ease;
+      }
+      html.dark body {
+        background-color: #111827; /* Gray 900 */
+        background-image: radial-gradient(rgba(255, 255, 255, 0.05) 1px, transparent 1px);
       }
       @keyframes fadeIn {
         from {
@@ -50,7 +61,7 @@
 }
 </script>
 </head>
-<body class="text-[#36451b]">
+<body class="text-[#36451b] dark:text-[#dce8b9]">
 <div id="root"></div>
 <script type="module" src="/index.tsx"></script>
 </body>
