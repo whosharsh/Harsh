@@ -1,14 +1,13 @@
-
 export interface AnalysisResult {
   isHealthy: boolean;
-  disease: string;
-  confidence: number;
+  plantName: string;
+  diseaseName: string | null;
   description: string;
-  treatment: string;
+  treatment: string | null;
+  safetyWarning: string | null;
 }
 
-export interface ExampleImage {
-  id: string;
-  url: string;
-  alt: string;
+export interface ChatMessage {
+  role: 'user' | 'model';
+  content: string;
 }

@@ -1,87 +1,58 @@
-
-import React, { useCallback, useState } from 'react';
+import React, { useState, useCallback } from 'react';
+import { useDropzone } from 'react-dropzone';
 import { UploadIcon } from './icons/UploadIcon';
 
 interface ImageUploaderProps {
-  onImageSelect: (file: File) => void;
-  imagePreview: string | null;
-  onClear: () => void;
+  onImageUpload: (file: File) => void;
 }
 
-export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageSelect, imagePreview, onClear }) => {
-  const [isDragging, setIsDragging] = useState(false);
+export const ImageUploader: React.FC<ImageUploaderProps> = ({ onImageUpload }) => {
+  const [error, setError] = useState<string | null>(null);
 
-  const handleFileChange = (event: React.ChangeEvent<HTMLInputElement>) => {
-    if (event.target.files && event.target.files[0]) {
-      onImageSelect(event.target.files[0]);
+  const onDrop = useCallback((acceptedFiles: File[], rejectedFiles: any[]) => {
+    setError(null);
+    if (rejectedFiles && rejectedFiles.length > 0) {
+      setError('Invalid file type. Please upload an image (jpeg, png, webp).');
+      return;
     }
-  };
-  
-  const handleDragEnter = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(true);
-  };
-  
-  const handleDragLeave = (e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-  };
-  
-  const handleDrop = useCallback((e: React.DragEvent<HTMLLabelElement>) => {
-    e.preventDefault();
-    e.stopPropagation();
-    setIsDragging(false);
-    if (e.dataTransfer.files && e.dataTransfer.files[0]) {
-      onImageSelect(e.dataTransfer.files[0]);
+    if (acceptedFiles && acceptedFiles.length > 0) {
+      onImageUpload(acceptedFiles[0]);
     }
-  }, [onImageSelect]);
+  }, [onImageUpload]);
 
-
-  if (imagePreview) {
-    return (
-      <div className="w-full text-center">
-        <div className="relative inline-block">
-          <img src={imagePreview} alt="Selected leaf" className="max-w-full max-h-80 rounded-lg shadow-lg" />
-          <button 
-            onClick={onClear}
-            className="absolute -top-3 -right-3 bg-red-500 text-white rounded-full h-8 w-8 flex items-center justify-center font-bold text-lg hover:bg-red-600 transition-colors"
-            aria-label="Remove image"
-          >
-            &times;
-          </button>
-        </div>
-      </div>
-    );
-  }
+  const { getRootProps, getInputProps, isDragActive } = useDropzone({
+    onDrop,
+    accept: {
+      'image/jpeg': [],
+      'image/png': [],
+      'image/webp': [],
+    },
+    maxFiles: 1,
+    multiple: false,
+  });
 
   return (
-    <div className="w-full">
-      <label
-        onDragEnter={handleDragEnter}
-        onDragOver={handleDragEnter} // Use the same handler
-        onDragLeave={handleDragLeave}
-        onDrop={handleDrop}
-        className={`flex justify-center w-full h-64 px-4 transition bg-white border-2 ${isDragging ? 'border-green-400' : 'border-gray-300'} border-dashed rounded-md appearance-none cursor-pointer hover:border-gray-400 focus:outline-none`}
+    <div className="bg-white/60 backdrop-blur-sm p-8 rounded-xl shadow-sm border border-emerald-200 text-center transition-all duration-500 animate-fade-in">
+      <div
+        {...getRootProps()}
+        className={`p-10 border-2 border-dashed rounded-lg cursor-pointer transition-colors ${
+          isDragActive ? 'border-emerald-600 bg-emerald-50' : 'border-emerald-300 hover:border-emerald-500'
+        }`}
       >
-        <span className="flex flex-col items-center justify-center space-y-2">
-          <UploadIcon className="w-12 h-12 text-gray-400" />
-          <span className="font-medium text-gray-600">
-            <span className="text-green-600 underline">Click to upload</span> or drag and drop
-          </span>
-          <span className="text-sm text-gray-500">
-            PNG, JPG, or WEBP
-          </span>
-        </span>
-        <input
-          type="file"
-          name="file_upload"
-          className="hidden"
-          accept="image/png, image/jpeg, image/webp"
-          onChange={handleFileChange}
-        />
-      </label>
+        <input {...getInputProps()} />
+        <div className="flex flex-col items-center justify-center">
+          <UploadIcon className="w-12 h-12 text-emerald-400" />
+          {isDragActive ? (
+            <p className="mt-4 text-lg font-semibold text-emerald-600">Drop the image here...</p>
+          ) : (
+            <>
+              <p className="mt-4 text-lg font-semibold text-emerald-800">Drag & drop a leaf photo</p>
+              <p className="text-emerald-600">or click to select a file</p>
+            </>
+          )}
+        </div>
+      </div>
+      {error && <p className="mt-4 text-sm text-red-600">{error}</p>}
     </div>
   );
 };

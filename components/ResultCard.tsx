@@ -1,4 +1,3 @@
-
 import React from 'react';
 import type { AnalysisResult } from '../types';
 import { CheckCircleIcon } from './icons/CheckCircleIcon';
@@ -8,67 +7,66 @@ import { HeartPulseIcon } from './icons/HeartPulseIcon';
 
 interface ResultCardProps {
   result: AnalysisResult;
+  imageSrc: string;
 }
 
-const ResultPill: React.FC<{ isHealthy: boolean }> = ({ isHealthy }) => {
-    const bgColor = isHealthy ? 'bg-green-100' : 'bg-red-100';
-    const textColor = isHealthy ? 'text-green-800' : 'text-red-800';
-    const Icon = isHealthy ? CheckCircleIcon : AlertTriangleIcon;
-  
-    return (
-      <span className={`inline-flex items-center px-3 py-1 rounded-full text-sm font-semibold ${bgColor} ${textColor}`}>
-        <Icon className="w-5 h-5 mr-2" />
-        {isHealthy ? 'Healthy' : 'Diseased'}
-      </span>
-    );
-};
+export const ResultCard: React.FC<ResultCardProps> = ({ result, imageSrc }) => {
+  const isHealthy = result.isHealthy;
 
-const ConfidenceMeter: React.FC<{ value: number }> = ({ value }) => {
-    const width = `${value}%`;
-    return (
-        <div>
-            <div className="flex justify-between items-center mb-1">
-                <span className="text-sm font-medium text-gray-600">Confidence</span>
-                <span className="text-sm font-bold text-green-700">{value}%</span>
-            </div>
-            <div className="w-full bg-gray-200 rounded-full h-2.5">
-                <div className="bg-green-600 h-2.5 rounded-full" style={{ width }}></div>
-            </div>
-        </div>
-    );
-};
-
-export const ResultCard: React.FC<ResultCardProps> = ({ result }) => {
   return (
-    <div className="bg-white rounded-xl shadow-lg overflow-hidden transition-all duration-300 animate-fade-in">
-      <div className="p-6 md:p-8">
-        <div className="flex flex-col md:flex-row md:items-start md:justify-between gap-4">
-            <div>
-                <h2 className="text-2xl font-bold text-gray-800">{result.disease}</h2>
-                <div className="mt-2">
-                    <ResultPill isHealthy={result.isHealthy} />
+    <div className="bg-white/60 backdrop-blur-sm rounded-xl shadow-sm border border-emerald-200 overflow-hidden transition-all duration-500 animate-fade-in flex flex-col items-center p-6 md:p-8">
+      <h2 className="text-2xl font-bold text-emerald-900 mb-6">Analysis Complete</h2>
+      
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-6 w-full">
+        <div className="flex justify-center items-center">
+            <img 
+                src={imageSrc} 
+                alt="Submitted plant leaf"
+                className="w-full max-w-xs h-auto rounded-lg shadow-sm border-2 border-emerald-200"
+            />
+        </div>
+        
+        <div className="flex flex-col space-y-4">
+            {result.safetyWarning && (
+                <div className="p-4 rounded-lg bg-yellow-100 border border-yellow-200 text-yellow-800">
+                    <div className="flex items-center">
+                        <AlertTriangleIcon className="h-6 w-6 mr-3 flex-shrink-0" />
+                        <h4 className="font-bold text-lg">Safety Warning</h4>
+                    </div>
+                    <p className="mt-2 text-sm">
+                        {result.safetyWarning}
+                    </p>
+                </div>
+            )}
+          
+            <div className={`p-4 rounded-lg flex items-center ${isHealthy ? 'bg-green-100 text-green-800' : 'bg-red-100 text-red-800'}`}>
+                {isHealthy ? <CheckCircleIcon className="h-6 w-6 mr-3" /> : <AlertTriangleIcon className="h-6 w-6 mr-3" />}
+                <div>
+                    <h3 className="font-bold text-lg">{result.plantName}: {isHealthy ? 'Healthy' : result.diseaseName}</h3>
                 </div>
             </div>
-            <div className="w-full md:w-48 flex-shrink-0">
-                <ConfidenceMeter value={result.confidence} />
-            </div>
-        </div>
 
-        <div className="mt-8 space-y-6">
-          <div>
-            <h3 className="flex items-center text-lg font-semibold text-gray-700">
-                <InfoIcon className="w-6 h-6 mr-3 text-blue-500" />
-                Description
-            </h3>
-            <p className="mt-2 text-gray-600 leading-relaxed">{result.description}</p>
-          </div>
-          <div>
-            <h3 className="flex items-center text-lg font-semibold text-gray-700">
-                <HeartPulseIcon className="w-6 h-6 mr-3 text-teal-500" />
-                Treatment & Care
-            </h3>
-            <p className="mt-2 text-gray-600 leading-relaxed whitespace-pre-wrap">{result.treatment}</p>
-          </div>
+             <div className="p-4 rounded-lg bg-lime-100 border border-lime-200">
+                <div className="flex items-center text-emerald-800">
+                    <InfoIcon className="h-5 w-5 mr-3 flex-shrink-0" />
+                    <h4 className="font-bold">Description</h4>
+                </div>
+                <p className="mt-2 text-emerald-700 text-sm">
+                    {result.description}
+                </p>
+            </div>
+
+            {result.treatment && (
+                 <div className="p-4 rounded-lg bg-emerald-100 border border-emerald-200">
+                    <div className="flex items-center text-emerald-800">
+                        <HeartPulseIcon className="h-5 w-5 mr-3 flex-shrink-0" />
+                        <h4 className="font-bold">Treatment Suggestion</h4>
+                    </div>
+                    <p className="mt-2 text-emerald-700 text-sm">
+                        {result.treatment}
+                    </p>
+                </div>
+            )}
         </div>
       </div>
     </div>
