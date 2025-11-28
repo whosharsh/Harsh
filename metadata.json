@@ -1,5 +1,7 @@
 {
-  "name": "Plant Disease Detection System",
-  "description": "An AI-powered application to detect plant diseases from leaf images. It identifies if a plant is healthy or infected, names the disease, and suggests treatments.",
-  "requestFramePermissions": []
+  "requestFramePermissions": [
+    "camera"
+  ],
+  "name": "",
+  "description": ""
 }
